@@ -1,0 +1,48 @@
+name: データ更新
+
+on:
+  schedule:
+    - cron: "0 0,6,12,18 * * *"
+  workflow_dispatch:
+  push:
+    paths:
+      - "data/master.json"
+      - "template.html"
+      - "scripts/update.py"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリを取得
+        uses: actions/checkout@v4
+
+      - name: Python を準備
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 依存パッケージ
+        run: pip install requests
+
+      - name: データ取得とサイト生成
+        run: python scripts/update.py
+
+      - name: 変更をコミット
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html data/snapshots
+          if git diff --staged --quiet; then
+            echo "変更なし"
+          else
+            git commit -m "データ更新 $(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M')"
+            git push
+          fi
