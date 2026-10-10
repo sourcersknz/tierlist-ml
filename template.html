@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MLBB ティア＆カウンター</title>
+<style>
+:root{
+  --bg:#0f0f1e; --panel:#181828; --panel2:#1f1f33; --line:#2a2a42;
+  --txt:#e8e8f0; --sub:#9a9ab0; --dim:#6a6a85;
+  --accent:#7c6cf0; --accent2:#4ac2a5;
+  --sS:#ff5c6c; --sA:#ff9f43; --sB:#ffd64a; --sC:#5cc9a5; --sD:#6a8ad6;
+}
+/* ティア表タブ表示中は明るいテーマに切り替え */
+body.light{
+  --bg:#f5f8fa; --panel:#ffffff; --panel2:#eef2f6; --line:#d8e0e8;
+  --txt:#1a2530; --sub:#5a6875; --dim:#95a3b0;
+  --accent:#5646d6; --accent2:#1e9e7e;
+  --sS:#e03a4c; --sA:#e07d1a; --sB:#c79a00; --sC:#1e9e7e; --sD:#3a63c0;
+}
+body{transition:background .2s}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",-apple-system,sans-serif;line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:1000px;margin:0 auto;padding:16px}
+header{padding:20px 0 12px;border-bottom:1px solid var(--line)}
+.title{font-size:24px;font-weight:700;letter-spacing:.02em;color:var(--txt)}
+.subnote{font-size:12px;color:var(--sub);margin-top:3px}
+.subnote a{color:var(--accent2);text-decoration:none}
+.subnote a:hover{text-decoration:underline}
+.meta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:8px;font-size:13px;color:var(--sub)}
+.badge{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:3px 10px}
+.updated{color:var(--accent2)}
+.updated.stale{color:var(--sA)}
+
+.controls{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start;margin:16px 0;padding:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.ctl-group{display:flex;flex-direction:column;gap:6px}
+.ctl-label{font-size:11px;color:var(--dim);letter-spacing:.05em}
+.seg{display:inline-flex;background:var(--panel2);border-radius:8px;padding:3px;gap:2px}
+.seg button{background:none;border:none;color:var(--sub);font-size:13px;padding:6px 12px;border-radius:6px;cursor:pointer;font-family:inherit;white-space:nowrap}
+.seg button.on{background:var(--accent);color:#fff;font-weight:600}
+.slider-group{flex:1;min-width:180px}
+.slider-row{display:flex;align-items:center;gap:10px}
+input[type=range]{flex:1;accent-color:var(--accent);cursor:pointer}
+.kval{font-variant-numeric:tabular-nums;font-size:13px;color:var(--accent2);min-width:42px;text-align:right}
+.hint{font-size:11px;color:var(--dim);margin-top:2px}
+
+.lanebar{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.lanebar button{background:var(--panel2);border:1px solid var(--line);color:var(--sub);font-family:inherit;font-size:13px;padding:6px 14px;border-radius:8px;cursor:pointer}
+.lanebar button.on{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+.lanerow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:-4px 0 12px}
+.lanerow.dim #mainSeg{opacity:.35;pointer-events:none}
+.lanenote{font-size:12px;color:var(--dim)}
+.subtag{display:inline-block;font-size:10px;color:var(--dim);border:1px solid var(--line);border-radius:4px;padding:0 5px;margin-left:6px;vertical-align:middle}
+tr.is-sub .hero-cell img,.tier-hero.is-sub img{opacity:.55}
+tr.is-sub .hero-cell>div>div:first-child,.tier-hero.is-sub .tn{color:var(--sub)}
+
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+th,td{padding:9px 10px;text-align:right;white-space:nowrap}
+th{background:var(--panel);color:var(--sub);font-weight:500;font-size:12px;cursor:pointer;user-select:none;position:sticky;top:0}
+th.name-col,td.name-col{text-align:left}
+th:hover{color:var(--txt)}
+th .ar{opacity:.4;font-size:10px}
+th.sorted .ar{opacity:1;color:var(--accent)}
+tbody tr{border-top:1px solid var(--line);cursor:pointer;transition:background .1s}
+tbody tr:hover{background:var(--panel)}
+tbody tr.open{background:var(--panel2)}
+.rank-n{color:var(--dim);font-variant-numeric:tabular-nums;width:34px}
+.hero-cell{display:flex;align-items:center;gap:9px}
+.hero-cell img{width:30px;height:30px;border-radius:50%;background:var(--panel2);object-fit:cover;flex-shrink:0}
+.hero-cell .en{font-size:11px;color:var(--dim)}
+.num{font-variant-numeric:tabular-nums}
+.win-hi{color:var(--sC)} .win-lo{color:var(--sS)}
+.empty{padding:30px;text-align:center;color:var(--dim);font-size:14px}
+.tierbadge{display:inline-block;width:22px;text-align:center;font-weight:700;border-radius:4px;font-size:12px;padding:1px 0}
+.tS{background:rgba(255,92,108,.18);color:var(--sS)}
+.tA{background:rgba(255,159,67,.18);color:var(--sA)}
+.tB{background:rgba(255,214,74,.18);color:var(--sB)}
+.tC{background:rgba(92,201,165,.18);color:var(--sC)}
+.tD{background:rgba(106,138,214,.18);color:var(--sD)}
+
+.counter-row td{padding:0;background:var(--panel2)}
+.counter-inner{padding:12px 14px;text-align:left}
+.counter-ttl{font-size:12px;color:var(--sub);margin-bottom:8px}
+.counter-ttl b{color:var(--txt)}
+.counter-list{display:flex;flex-wrap:wrap;gap:8px}
+.counter-chip{display:flex;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:4px 12px 4px 4px}
+.counter-chip img{width:26px;height:26px;border-radius:50%;background:var(--panel2)}
+.counter-chip .cn{font-size:13px}
+.counter-chip .inc{font-size:12px;color:var(--sC);font-variant-numeric:tabular-nums}
+
+.tiers{display:flex;flex-direction:column;gap:10px}
+.tier{display:flex;gap:12px;align-items:stretch;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.tier-key{width:56px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800}
+.tier-key.S{background:rgba(255,92,108,.15);color:var(--sS)}
+.tier-key.A{background:rgba(255,159,67,.15);color:var(--sA)}
+.tier-key.B{background:rgba(255,214,74,.15);color:var(--sB)}
+.tier-key.C{background:rgba(92,201,165,.15);color:var(--sC)}
+.tier-key.D{background:rgba(106,138,214,.15);color:var(--sD)}
+.tier-heroes{display:flex;flex-wrap:wrap;gap:8px;padding:12px;flex:1}
+.tier-hero{display:flex;flex-direction:column;align-items:center;gap:3px;width:60px;cursor:pointer;padding:4px;border-radius:8px}
+.tier-hero:hover{background:var(--panel2)}
+.tier-hero img{width:42px;height:42px;border-radius:50%;background:var(--panel2)}
+.tier-hero .tn{font-size:11px;text-align:center;line-height:1.2}
+.tier-hero .tv{font-size:10px;color:var(--dim);font-variant-numeric:tabular-nums}
+
+.explain{margin:18px 0;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.explain summary{padding:14px 16px;cursor:pointer;font-size:14px;font-weight:600;color:var(--accent2);list-style:none}
+.explain summary::-webkit-details-marker{display:none}
+.explain summary::before{content:"▸ ";color:var(--accent)}
+.explain[open] summary::before{content:"▾ "}
+.explain-body{padding:0 16px 16px;font-size:13px;color:var(--sub);line-height:1.8}
+.explain-body p{margin:8px 0}
+.explain-body .eh{color:var(--accent2);font-weight:600;margin:14px 0 4px}
+.explain-body .eh:first-child{margin-top:0}
+.explain-body b{color:var(--txt)}
+.explain-note{padding-top:8px;border-top:1px solid var(--line);color:var(--dim)}
+
+.footer{margin:24px 0 40px;font-size:12px;color:var(--dim);line-height:1.8}
+.footer a{color:var(--sub)}
+.hidden{display:none!important}
+
+/* トップタブ */
+.toptab{display:flex;gap:4px;margin:16px 0 4px;border-bottom:1px solid var(--line)}
+.toptab button{background:none;border:none;border-bottom:2px solid transparent;color:var(--sub);font-family:inherit;font-size:15px;font-weight:600;padding:10px 18px;cursor:pointer;margin-bottom:-1px}
+.toptab button.on{color:var(--txt);border-bottom-color:var(--accent)}
+
+/* カウンター検索 */
+.csearch{display:flex;gap:8px;align-items:stretch;margin:16px 0}
+.csearch-box{position:relative;flex:1}
+.csearch-box input{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--txt);font-family:inherit;font-size:16px;padding:13px 40px 13px 16px}
+.csearch-box input:focus{outline:none;border-color:var(--accent)}
+.creset{flex-shrink:0;background:var(--panel2);border:1px solid var(--line);color:var(--txt);font-family:inherit;font-size:14px;font-weight:600;padding:0 18px;border-radius:10px;cursor:pointer}
+.creset:hover{background:var(--line)}
+.cclear{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:var(--panel2);border:none;color:var(--sub);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:16px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px;margin-bottom:20px}
+.cg-hero{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;border-radius:10px;cursor:pointer;border:1px solid transparent}
+.cg-hero:hover{background:var(--panel)}
+.cg-hero.sel{background:var(--panel2);border-color:var(--accent)}
+.cg-hero img{width:46px;height:46px;border-radius:50%;background:var(--panel2)}
+.cg-hero .cn{font-size:11px;text-align:center;line-height:1.2}
+.cg-empty{grid-column:1/-1;padding:24px;text-align:center;color:var(--dim)}
+
+/* カウンター詳細 */
+.cdetail{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:20px}
+.cd-head{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.cd-head img{width:56px;height:56px;border-radius:50%;background:var(--panel2)}
+.cd-head .cd-name{font-size:20px;font-weight:700}
+.cd-head .cd-lane{font-size:12px;color:var(--sub);margin-top:2px}
+.cd-sec{margin-bottom:16px}
+.cd-sec:last-child{margin-bottom:0}
+.cd-label{font-size:12px;color:var(--accent2);font-weight:600;margin-bottom:8px}
+.cd-counters{display:flex;flex-wrap:wrap;gap:10px}
+.cd-cnt{display:flex;flex-direction:column;align-items:center;gap:4px;width:66px}
+.cd-cnt.clk{cursor:pointer;border-radius:8px;padding:4px 0;transition:background .1s}
+.cd-cnt.clk:hover{background:var(--panel2)}
+.cd-cnt.clk:hover img{outline:2px solid var(--accent)}
+.cd-cnt.clk .cnn{color:var(--accent2)}
+.cd-cnt img{width:50px;height:50px;border-radius:50%;background:var(--panel2)}
+.cd-cnt .cnn{font-size:12px;text-align:center;line-height:1.2}
+.cd-chips{display:flex;flex-wrap:wrap;gap:8px}
+.cd-chip{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 13px;font-size:13px}
+.cd-spell .cd-chip{border-color:var(--accent);color:var(--txt)}
+.cd-cols{display:flex;gap:20px;flex-wrap:wrap}
+.cd-cols>div{flex:1;min-width:200px}
+@media(max-width:600px){
+  .toptab button{font-size:14px;padding:9px 12px}
+  .cgrid{grid-template-columns:repeat(auto-fill,minmax(56px,1fr))}
+  .cg-hero img{width:42px;height:42px}
+}
+
+@media(max-width:600px){
+  .title{font-size:20px}
+  .controls{gap:12px;padding:12px}
+  th,td{padding:7px 7px;font-size:13px}
+  .hero-cell img{width:26px;height:26px}
+  .tier-key{width:44px;font-size:20px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="title">MLBB ティア＆カウンター表</div>
+    <div class="subnote">※ティアは公式ページの勝率より</div>
+    <div class="subnote"><a href="https://www.mobilelegends.com/rank" target="_blank" rel="noopener">https://www.mobilelegends.com/rank</a></div>
+    <div class="meta">
+      <span class="badge">Gミシック</span>
+      <span class="badge">直近7日間</span>
+      <span class="updated" id="updated">最終更新：—</span>
+    </div>
+  </header>
+
+  <div class="toptab" id="topTab">
+    <button data-page="counter" class="on">カウンター検索</button>
+    <button data-page="tier">ティア表</button>
+  </div>
+
+  <div id="tierPage" class="hidden">
+  <div class="controls">
+    <div class="ctl-group">
+      <span class="ctl-label">表示</span>
+      <div class="seg" id="viewSeg">
+        <button data-view="list" class="on">一覧表</button>
+        <button data-view="tier">ティア表</button>
+      </div>
+    </div>
+    <div class="ctl-group">
+      <span class="ctl-label">評価モード</span>
+      <div class="seg" id="modeSeg">
+        <button data-mode="adj" class="on">補正勝率</button>
+        <button data-mode="win">単純勝率</button>
+        <button data-mode="score">総合スコア</button>
+      </div>
+    </div>
+    <div class="ctl-group slider-group" id="kwrap">
+      <span class="ctl-label">補正の強さ（まぐれの割引き）</span>
+      <div class="slider-row">
+        <span style="font-size:11px;color:var(--dim)">弱</span>
+        <input type="range" id="kslider" min="0" max="30" value="10">
+        <span style="font-size:11px;color:var(--dim)">強</span>
+        <span class="kval" id="kval">1.0%</span>
+      </div>
+      <div class="hint">ピック率が低いヒーローの勝率を50%へ引き戻す度合い</div>
+    </div>
+  </div>
+
+
+  <div class="lanebar" id="laneBar"></div>
+  <div class="lanerow" id="laneRow">
+    <div class="seg" id="mainSeg">
+      <button data-main="1" class="on">メインのみ</button>
+      <button data-main="0">サブ含む</button>
+    </div>
+    <span class="lanenote" id="laneNote"></span>
+  </div>
+
+  <div id="listView" class="tablewrap"></div>
+  <div id="tierView" class="tiers hidden"></div>
+
+
+  <details class="explain">
+    <summary>指標の見かた（補正勝率・総合スコア・ティア）</summary>
+    <div class="explain-body">
+      <p class="eh">■ 補正の強さ（まぐれの割引き）</p>
+      <p>公式の勝率をそのまま並べると、ピック率が極端に低いヒーローが上位に来ます。これは「そのヒーローが強い」のではなく「使っている人が少なく、その少数が使い込んだ専門家に偏っている」ことを見ている場合が多いです。</p>
+      <p>たとえるなら、テストを<b>1回だけ受けて100点</b>の人と、<b>50回受けて平均85点</b>の人。平均点は前者が上でも、実力が確かなのは後者です。1回きりの100点はまぐれかもしれません。</p>
+      <p>そこで<b>ピック率が低いヒーローの勝率を、全体平均（50%）へ引き戻します</b>。使われている回数が少ないほど強く引き戻し、多く使われて安定しているヒーローほど実測値をそのまま残す——これが「補正勝率」です。スライダーはその引き戻しの強さで、<b>上げるほど低ピック率のヒーローが厳しく割り引かれます</b>（0%＝公式の生の勝率と一致）。</p>
+
+      <p class="eh">■ 評価モード（順位の指標）</p>
+      <p><b>補正勝率</b>… 上記の補正をかけた勝率。既定。まぐれを割り引いた実力値。</p>
+      <p><b>単純勝率</b>… 公式が出している生の勝率。補正なし。公式サイトとの突き合わせ用。</p>
+      <p><b>総合スコア</b>… 補正勝率(60%)・ピック率(25%)・BAN率(15%)を合成した指標。BAN率は「多くのプレイヤーが警戒している＝強さの投票」とみなして加点しています。</p>
+
+      <p class="eh">■ ティア（S〜D）</p>
+      <p>選んだ評価モードの数値をもとに、<b>表示中のヒーロー群の中での相対評価</b>で自動的にS〜Dへ振り分けています。平均から見て飛び抜けて高ければS、低ければDです。</p>
+      <p>相対評価なので、<b>レーンを絞ったり「メインのみ／サブ含む」を切り替えると、比べる相手が変わってティアも変わります</b>。</p>
+
+      <p class="eh">■ レーンの絞り込み</p>
+      <p><b>メインのみ</b>＝そのレーンを主戦場とするヒーロー。<b>サブ含む</b>＝そのレーンにも行けるヒーロー（「サブ」と表示）。</p>
+      <p class="explain-note">統計そのものはレーン別ではありません（Moontonがレーン別勝率を公開していないため）。同じヒーローはどのレーンでも同じ勝率です。厳密な「そのレーンでの勝率」ではない点にご注意ください。</p>
+
+      <p class="eh">■ ピック率とBAN率の使いかた</p>
+      <p><b>補正勝率</b>では、ピック率を「その勝率をどれだけ信用するか」の目安として使います。よく使われているヒーローの勝率はそのまま、あまり使われていないヒーローの勝率は50%へ引き戻します。BAN率は使っていません。</p>
+      <p><b>総合スコア</b>は、補正勝率60%・ピック率25%・BAN率15%の割合で合成しています。この配分は当サイト独自の設定です。</p>
+      <p><b>BAN率が高いヒーローは、補正勝率が低めに出ます。</b>BANされると使えないのでピック率が下がり、「あまり使われていない＝信用できない」と判定されてしまうためです。強すぎてBANされているヒーローほど、この影響を受けます。総合スコアではBAN率を加点して、ある程度補っています。</p>
+    </div>
+  </details>
+  </div><!-- /tierPage -->
+
+  <div id="counterPage">
+    <div class="csearch">
+      <div class="csearch-box">
+        <input type="text" id="cInput" placeholder="相手ヒーローを検索（かな・カナ・英語）" data-i18n-placeholder="search" autocomplete="off">
+        <button id="cClear" class="cclear hidden">×</button>
+      </div>
+      <button id="cReset" class="creset">クリア</button>
+    </div>
+    <div class="cdetail hidden" id="cDetail"></div>
+    <div class="cgrid" id="cGrid"></div>
+    <div class="footer" style="border:0;margin-top:20px">
+      <div>相手ヒーローを選ぶと、有利に立てるカウンターヒーロー・対策ビルド・対策スペルが表示されます。</div>
+      
+    </div>
+  </div><!-- /counterPage -->
+
+  <div class="footer" id="tierFooter">
+    <div>順位の指標：<b id="modeDesc"></b></div>
+    <div>「対面有利」はヒーロー名をタップすると表示されます。数値はそのヒーローを相手にしたときの勝率上昇分（Moonton提供のカウンター情報）です。</div>
+    <div>データ出典：Mobile Legends: Bang Bang 公式統計（© Moonton）。ヒーロー名・数値の解釈は当サイト独自であり、公式の見解ではありません。</div>
+    <div class="creator-credit">Creator / Dev: Edward</div>
+  </div>
+</div>
+
+<script>
+/*__DATA__*/
+
+/*__LANES__*/
+
+/*__COUNTER__*/
+
+const state = { view:'list', mode:'adj', k:0.01, lane:'all', mainOnly:true, sortKey:null, sortDir:-1, openId:null };
+const allHeroes = RAW.heroes;
+const byId = {}; allHeroes.forEach(h=>byId[h.id]=h);
+
+const laneLabel = {}; LANES.forEach(L=>laneLabel[L.id]=L.label);
+function isSub(h){ return state.lane!=='all' && h.main!==state.lane; }
+function laneHeroes(){
+  if(state.lane==='all') return allHeroes;
+  if(state.mainOnly) return allHeroes.filter(h=>h.main===state.lane);
+  return allHeroes.filter(h=>(h.lanes||[]).indexOf(state.lane)>=0);
+}
+
+// 更新時刻
+(function(){
+  const el=document.getElementById('updated');
+  el.textContent='最終更新：'+(RAW.updated||'—');
+  if(RAW.updated){
+    const d=new Date(RAW.updated.replace(' ','T')+':00+09:00');
+    const days=(Date.now()-d.getTime())/86400000;
+    if(days>3){ el.classList.add('stale'); el.textContent+='（更新が停止している可能性）'; }
+  }
+})();
+
+// レーンバー
+(function(){
+  const bar=document.getElementById('laneBar');
+  const btns=[{id:'all',label:tr('allLane'),emoji:''}].concat(LANES.map(L=>({id:L.id,label:L.label,emoji:L.emoji})));
+  bar.innerHTML=btns.map(b=>`<button data-lane="${b.id}" class="${b.id==='all'?'on':''}">${b.emoji} ${b.label}</button>`).join('');
+  bar.onclick=e=>{ const b=e.target.closest('button'); if(!b)return;
+    state.lane=b.dataset.lane; state.openId=null; state.sortKey=null;
+    bar.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+    render();
+  };
+  document.getElementById('mainSeg').onclick=e=>{
+    const b=e.target.closest('button'); if(!b)return;
+    state.mainOnly = b.dataset.main==='1'; state.openId=null; state.sortKey=null;
+    document.querySelectorAll('#mainSeg button').forEach(x=>x.classList.toggle('on',x===b));
+    render();
+  };
+})();
+
+function adjWin(h,k){ return (h.pick*h.win + k*0.5)/(h.pick+k); }
+function stats(arr){ const m=arr.reduce((a,b)=>a+b,0)/arr.length;
+  const v=arr.reduce((a,b)=>a+(b-m)**2,0)/arr.length; return [m,Math.sqrt(v)||1]; }
+
+function computeScores(pool){
+  const k=state.k;
+  pool.forEach(h=>{ h._adj=adjWin(h,k); });
+  const [am,as]=stats(pool.map(h=>h._adj));
+  const [pm,ps]=stats(pool.map(h=>Math.log(h.pick+1e-6)));
+  const [bm,bs]=stats(pool.map(h=>h.ban));
+  pool.forEach(h=>{
+    h._score = 0.60*((h._adj-am)/as) + 0.25*((Math.log(h.pick+1e-6)-pm)/ps) + 0.15*((h.ban-bm)/bs);
+  });
+}
+function metricOf(h){ return state.mode==='win'?h.win : state.mode==='adj'?h._adj : h._score; }
+function metricLabel(){ return state.mode==='win'?tr('win') : state.mode==='adj'?tr('adj') : tr('score'); }
+function assignTiers(pool){
+  const vals=pool.map(metricOf); const [m,s]=stats(vals);
+  pool.forEach(h=>{ const z=(metricOf(h)-m)/s;
+    h._tier = z>=1?'S': z>=0.4?'A': z>=-0.4?'B': z>=-1?'C':'D'; });
+}
+function fmtPct(x){ return (x*100).toFixed(2)+'%'; }
+function fmtScore(x){ return (x>=0?'+':'')+x.toFixed(2); }
+
+function render(){
+  const pool=laneHeroes();
+  computeScores(pool);
+  assignTiers(pool);
+  document.getElementById('modeDesc').textContent=metricLabel();
+  document.getElementById('laneRow').classList.toggle('dim', state.lane==='all');
+  document.getElementById('laneNote').textContent = state.lane==='all'
+    ? tr('laneChoose')
+    : `${laneLabel[state.lane]}: ${pool.length} ${currentLang==='ja'?'体':'heroes'} (${state.mainOnly?tr('primaryLane'):tr('subLane')})`;
+  document.getElementById('kwrap').style.visibility = state.mode==='win'?'hidden':'visible';
+  if(state.view==='list') renderList(pool); else renderTier(pool);
+}
+
+function renderList(pool){
+  const key = state.sortKey || (state.mode==='win'?'win':state.mode==='adj'?'_adj':'_score');
+  const dir = state.sortKey? state.sortDir : -1;
+  const rows=[...pool].sort((a,b)=>(a[key]-b[key])*dir);
+  const cols=[
+    {k:'_rank',label:'#',cls:'rank-n'},
+    {k:'name',label:tr('hero'),cls:'name-col'},
+    {k:'_tier',label:currentLang==='ja'?'ティア':'Tier'},
+    {k:'win',label:tr('winRate')},
+    {k:'pick',label:tr('pickRate')},
+    {k:'ban',label:tr('banRate')},
+    {k: state.mode==='score'?'_score':'_adj', label: state.mode==='score'?tr('score') : tr('adj')},
+  ];
+  let h='<table><thead><tr>';
+  cols.forEach(c=>{
+    const sortable=!['_rank','_tier'].includes(c.k);
+    const sorted=sortable && (state.sortKey||key)===c.k;
+    h+=`<th class="${c.cls||''} ${sorted?'sorted':''}" ${sortable?`data-sort="${c.k}"`:''}>${c.label}${sortable?` <span class="ar">${sorted&&dir>0?'▲':'▼'}</span>`:''}</th>`;
+  });
+  h+='</tr></thead><tbody>';
+  if(!rows.length) h+='<tr><td colspan="7"><div class="empty">'+tr('noLane')+'</div></td></tr>';
+  rows.forEach((hero,i)=>{
+    const isOpen=state.openId===hero.id;
+    const sub=isSub(hero);
+    h+=`<tr data-id="${hero.id}" class="${isOpen?'open':''} ${sub?'is-sub':''}">
+      <td class="rank-n">${i+1}</td>
+      <td class="name-col"><div class="hero-cell"><img loading="lazy" src="${hero.head}" alt=""><div><div>${displayHeroName(hero)}${sub?'<span class="subtag">'+tr('sub')+'</span>':''}</div><div class="en">${hero.en}</div></div></div></td>
+      <td><span class="tierbadge t${hero._tier}">${hero._tier}</span></td>
+      <td class="num ${hero.win>=0.52?'win-hi':hero.win<0.48?'win-lo':''}">${fmtPct(hero.win)}</td>
+      <td class="num">${fmtPct(hero.pick)}</td>
+      <td class="num">${fmtPct(hero.ban)}</td>
+      <td class="num">${state.mode==='score'?fmtScore(hero._score):fmtPct(hero._adj)}</td>
+    </tr>`;
+    if(isOpen) h+=counterRow(hero);
+  });
+  h+='</tbody></table>';
+  const lv=document.getElementById('listView'); lv.innerHTML=h;
+  lv.querySelectorAll('th[data-sort]').forEach(th=>th.onclick=()=>{
+    const k=th.dataset.sort;
+    if(state.sortKey===k) state.sortDir*=-1; else { state.sortKey=k; state.sortDir=-1; }
+    render();
+  });
+  lv.querySelectorAll('tr[data-id]').forEach(tr=>tr.onclick=()=>{
+    const id=+tr.dataset.id; state.openId=state.openId===id?null:id; render();
+  });
+}
+
+function counterRow(hero){
+  const chips=hero.sub.map(s=>{
+    const t=byId[s.id]; if(!t) return '';
+    return `<div class="counter-chip"><img loading="lazy" src="${t.head}" alt=""><span class="cn">${displayHeroName(t)}</span><span class="inc">+${(s.inc*100).toFixed(1)}%</span></div>`;
+  }).join('');
+  return `<tr class="counter-row"><td colspan="7"><div class="counter-inner">
+    <div class="counter-ttl"><b>${displayHeroName(hero)}</b>${tr('counterTitle')}</div>
+    <div class="counter-list">${chips||'<span style="color:var(--dim);font-size:13px">'+tr('noData')+'</span>'}</div>
+  </div></td></tr>`;
+}
+
+function renderTier(pool){
+  const order=['S','A','B','C','D'];
+  const groups={S:[],A:[],B:[],C:[],D:[]};
+  [...pool].sort((a,b)=>metricOf(b)-metricOf(a)).forEach(h=>groups[h._tier].push(h));
+  let h='';
+  if(!pool.length) h='<div class="empty">'+tr('noLane')+'</div>';
+  order.forEach(t=>{
+    const list=groups[t]; if(!list.length) return;
+    h+=`<div class="tier"><div class="tier-key ${t}">${t}</div><div class="tier-heroes">`;
+    list.forEach(hero=>{
+      const v=state.mode==='score'?fmtScore(hero._score):fmtPct(metricOf(hero));
+      h+=`<div class="tier-hero ${isSub(hero)?'is-sub':''}" data-id="${hero.id}"><img loading="lazy" src="${hero.head}" alt=""><div class="tn">${displayHeroName(hero)}</div><div class="tv">${v}</div></div>`;
+    });
+    h+='</div></div>';
+  });
+  const tv=document.getElementById('tierView'); tv.innerHTML=h;
+  tv.querySelectorAll('.tier-hero').forEach(el=>el.onclick=()=>{
+    state.view='list'; state.openId=+el.dataset.id;
+    document.querySelectorAll('#viewSeg button').forEach(b=>b.classList.toggle('on',b.dataset.view==='list'));
+    document.getElementById('listView').classList.remove('hidden');
+    document.getElementById('tierView').classList.add('hidden');
+    render();
+    setTimeout(()=>{const r=document.querySelector('tr[data-id="'+state.openId+'"]');if(r)r.scrollIntoView({behavior:'smooth',block:'center'});},50);
+  });
+}
+
+document.getElementById('viewSeg').onclick=e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  state.view=b.dataset.view;
+  document.querySelectorAll('#viewSeg button').forEach(x=>x.classList.toggle('on',x===b));
+  document.getElementById('listView').classList.toggle('hidden',state.view!=='list');
+  document.getElementById('tierView').classList.toggle('hidden',state.view!=='tier');
+  render();
+};
+document.getElementById('modeSeg').onclick=e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  state.mode=b.dataset.mode; state.sortKey=null;
+  document.querySelectorAll('#modeSeg button').forEach(x=>x.classList.toggle('on',x===b));
+  render();
+};
+const ks=document.getElementById('kslider');
+ks.oninput=()=>{ state.k=ks.value/1000; document.getElementById('kval').textContent=(ks.value/10).toFixed(1)+'%'; render(); };
+
+/* ===== カウンター検索タブ ===== */
+const headById = {}; RAW.heroes.forEach(h=>headById[h.id]=h.head);
+const counters = (typeof COUNTER!=='undefined' && COUNTER.heroes) ? COUNTER.heroes : [];
+let cSelected = null;
+
+// トップタブ切替
+document.getElementById('topTab').onclick=e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  const page=b.dataset.page;
+  document.querySelectorAll('#topTab button').forEach(x=>x.classList.toggle('on',x===b));
+  document.getElementById('tierPage').classList.toggle('hidden',page!=='tier');
+  document.getElementById('tierFooter').classList.toggle('hidden',page!=='tier');
+  document.getElementById('counterPage').classList.toggle('hidden',page!=='counter');
+  document.body.classList.toggle('light', page==='tier');
+  if(page==='counter' && !cGridBuilt) buildGrid();
+};
+
+let cGridBuilt=false;
+function heroImg(id){ return headById[id]||''; }
+
+function buildGrid(filter){
+  const grid=document.getElementById('cGrid');
+  const q=(filter||'').trim().toLowerCase();
+  const list = q ? counters.filter(c=>c.yomi.indexOf(q)>=0) : counters;
+  if(!list.length){ grid.innerHTML='<div class="cg-empty">'+tr('noHeroes')+'</div>'; return; }
+  grid.innerHTML=list.map(c=>
+    `<div class="cg-hero ${cSelected===c.id?'sel':''}" data-id="${c.id}"><img loading="lazy" src="${heroImg(c.id)}" alt=""><div class="cn">${currentLang==='ja'?c.name:(c.en||c.name)}</div></div>`
+  ).join('');
+  grid.querySelectorAll('.cg-hero').forEach(el=>el.onclick=()=>selectCounter(+el.dataset.id));
+  cGridBuilt=true;
+}
+
+function selectCounter(id){
+  cSelected=id;
+  const c=counters.find(x=>x.id===id);
+  const d=document.getElementById('cDetail');
+  if(!c){ d.classList.add('hidden'); return; }
+  const hasDetail=new Set(counters.map(x=>x.id));
+  const cnt=c.counters.map(x=>{
+    const clickable=hasDetail.has(x.id);
+    return `<div class="cd-cnt ${clickable?'clk':''}" ${clickable?`data-goto="${x.id}"`:''}><img loading="lazy" src="${heroImg(x.id)}" alt=""><div class="cnn">${currentLang==='ja'?x.name:(counters.find(y=>y.id===x.id)?.en||x.name)}</div></div>`;
+  }).join('');
+  const cbuild=(c.cbuild||[]).map(b=>`<span class="cd-chip">${b}</span>`).join('');
+  const core=(c.core||[]).map(b=>`<span class="cd-chip">${b}</span>`).join('');
+  d.innerHTML=`
+    <div class="cd-head">
+      <img src="${heroImg(c.id)}" alt="">
+      <div><div class="cd-name">${currentLang==='ja'?c.name:(c.en||c.name)}${tr('counterSuffix')}</div><div class="cd-lane">${c.lane||''}</div></div>
+    </div>
+    <div class="cd-sec">
+      <div class="cd-label">${tr('counterHeroes')}</div>
+      <div class="cd-counters">${cnt||'<span style="color:var(--dim)">'+tr('noData')+'</span>'}</div>
+    </div>
+    <div class="cd-cols">
+      <div class="cd-sec cd-spell">
+        <div class="cd-label">${tr('spell')}</div>
+        <div class="cd-chips">${c.spell?`<span class="cd-chip">${c.spell}</span>`:'<span style="color:var(--dim)">—</span>'}</div>
+      </div>
+      <div class="cd-sec">
+        <div class="cd-label">${tr('build')}</div>
+        <div class="cd-chips">${cbuild||'<span style="color:var(--dim)">—</span>'}</div>
+      </div>
+      <div class="cd-sec">
+        <div class="cd-label">${tr('core')}</div>
+        <div class="cd-chips">${core||'<span style="color:var(--dim)">—</span>'}</div>
+      </div>
+    </div>`;
+  d.classList.remove('hidden');
+  d.querySelectorAll('.cd-cnt.clk').forEach(el=>el.onclick=()=>{
+    const gid=+el.dataset.goto;
+    cInput.value=''; cClear.classList.add('hidden');
+    selectCounter(gid);
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+  buildGrid(document.getElementById('cInput').value);
+  d.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+const cInput=document.getElementById('cInput');
+const cClear=document.getElementById('cClear');
+cInput.oninput=()=>{
+  cClear.classList.toggle('hidden',!cInput.value);
+  buildGrid(cInput.value);
+};
+cClear.onclick=()=>{ cInput.value=''; cClear.classList.add('hidden'); buildGrid(); cInput.focus(); };
+
+document.getElementById('cReset').onclick=()=>{
+  cInput.value='';
+  cClear.classList.add('hidden');
+  cSelected=null;
+  document.getElementById('cDetail').classList.add('hidden');
+  buildGrid();
+  cInput.focus();
+};
+
+
+/* ===== Language switcher: Japanese / Indonesian / English ===== */
+const LANG = {
+  ja: {
+    title:'MLBB ティア＆カウンター表', sourceNote:'※ティアは公式ページの勝率より',
+    counterTab:'カウンター検索', tierTab:'ティア表', view:'表示', list:'一覧表', tier:'ティア表',
+    mode:'評価モード', adj:'補正勝率', win:'単純勝率', score:'総合スコア',
+    strength:'補正の強さ（まぐれの割引き）', weak:'弱', strong:'強',
+    hint:'ピック率が低いヒーローの勝率を50%へ引き戻す度合い',
+    mainOnly:'メインのみ', includeSub:'サブ含む', explain:'指標の見かた（補正勝率・総合スコア・ティア）',
+    search:'相手ヒーローを検索（かな・カナ・英語）', clear:'クリア',
+    counterHelp:'相手ヒーローを選ぶと、有利に立てるカウンターヒーロー・対策ビルド・対策スペルが表示されます。',
+    noHeroes:'該当するヒーローがいません', noLane:'このレーンに該当するヒーローがありません',
+    hero:'ヒーロー', winRate:'勝率', pickRate:'ピック率', banRate:'BAN率', sub:'サブ',
+    last:'最終更新：', stale:'（更新が停止している可能性）', allLane:'全レーン',
+    counterTitle:' が対面で有利な相手（勝率上昇分）', noData:'データなし',
+    counterHeroes:'▼ 有利に立てるカウンターヒーロー', spell:'▼ 対策スペル',
+    build:'▼ 対策ビルド', core:'▼ 相手のコアビルド（警戒）', counterSuffix:' 対策',
+    laneChoose:'レーンを選ぶと「メインのみ／サブ含む」を切り替えられます',
+    primaryLane:'主レーンのみ', subLane:'サブレーンを含む',
+    source:'データ出典：Mobile Legends: Bang Bang 公式統計（© Moonton）。ヒーロー名・数値の解釈は当サイト独自であり、公式の見解ではありません。',
+    creator:'Creator / Dev: Edward'
+  },
+  id: {
+    title:'MLBB Tier List & Counter', sourceNote:'※Tier didasarkan pada statistik win rate resmi',
+    counterTab:'Cari Counter', tierTab:'Tier List', view:'Tampilan', list:'Daftar', tier:'Tier List',
+    mode:'Mode Penilaian', adj:'Win Rate Terkoreksi', win:'Win Rate Murni', score:'Skor Gabungan',
+    strength:'Kekuatan koreksi (mengurangi faktor keberuntungan)', weak:'Rendah', strong:'Tinggi',
+    hint:'Seberapa besar win rate hero dengan pick rate rendah ditarik mendekati 50%',
+    mainOnly:'Lane utama saja', includeSub:'Termasuk lane sekunder', explain:'Panduan metrik (win rate terkoreksi, skor, dan tier)',
+    search:'Cari hero lawan (nama Jepang atau Inggris)', clear:'Hapus',
+    counterHelp:'Pilih hero lawan untuk melihat hero counter, build counter, dan spell yang disarankan.',
+    noHeroes:'Hero yang cocok tidak ditemukan', noLane:'Tidak ada hero di lane ini',
+    hero:'Hero', winRate:'Win Rate', pickRate:'Pick Rate', banRate:'Ban Rate', sub:'Sekunder',
+    last:'Pembaruan terakhir: ', stale:' (mungkin sudah tidak diperbarui)', allLane:'Semua Lane',
+    counterTitle:' memiliki keunggulan saat melawan (kenaikan win rate)', noData:'Tidak ada data',
+    counterHeroes:'▼ Hero Counter', spell:'▼ Spell Counter',
+    build:'▼ Build Counter', core:'▼ Build inti lawan (waspada)', counterSuffix:' — Counter',
+    laneChoose:'Pilih lane untuk mengganti antara lane utama saja dan termasuk lane sekunder',
+    primaryLane:'Lane utama saja', subLane:'Termasuk lane sekunder',
+    source:'Sumber data: statistik resmi Mobile Legends: Bang Bang (© Moonton). Interpretasi nama hero dan angka merupakan analisis situs ini, bukan pandangan resmi.',
+    attribution:'Informasi counter disusun sebagai referensi kecocokan hero.',
+    creator:'Creator / Dev: Edward'
+  },
+  en: {
+    title:'MLBB Tier List & Counters', sourceNote:'※ Tiers are based on official win-rate statistics',
+    counterTab:'Counter Search', tierTab:'Tier List', view:'View', list:'List', tier:'Tier List',
+    mode:'Rating Mode', adj:'Adjusted Win Rate', win:'Raw Win Rate', score:'Overall Score',
+    strength:'Adjustment strength (discounting luck)', weak:'Low', strong:'High',
+    hint:'How strongly low-pick-rate heroes are pulled toward a 50% win rate',
+    mainOnly:'Main lane only', includeSub:'Include secondary lanes', explain:'Metric guide (adjusted win rate, overall score, and tiers)',
+    search:'Search enemy hero (Japanese or English name)', clear:'Clear',
+    counterHelp:'Select an enemy hero to see counter heroes, counter builds, and recommended spells.',
+    noHeroes:'No matching heroes found', noLane:'No heroes match this lane',
+    hero:'Hero', winRate:'Win Rate', pickRate:'Pick Rate', banRate:'Ban Rate', sub:'Secondary',
+    last:'Last updated: ', stale:' (updates may have stopped)', allLane:'All Lanes',
+    counterTitle:' has an advantage against (win-rate increase)', noData:'No data',
+    counterHeroes:'▼ Counter Heroes', spell:'▼ Counter Spell',
+    build:'▼ Counter Build', core:'▼ Enemy Core Build (watch out)', counterSuffix:' Counters',
+    laneChoose:'Choose a lane to switch between main lane only and secondary lanes included',
+    primaryLane:'Main lane only', subLane:'Including secondary lanes',
+    source:'Data source: official Mobile Legends: Bang Bang statistics (© Moonton). Hero names and figures are interpreted by this site and do not represent official views.',
+    attribution:'Counter information is provided as a reference for hero matchups.',
+    creator:'Creator / Dev: Edward'
+  }
+};
+let currentLang = 'ja';
+function tr(key){ return (LANG[currentLang] && LANG[currentLang][key]) || (LANG.ja[key]) || key; }
+function displayHeroName(h){ return currentLang === 'ja' ? h.name : (h.en || h.name); }
+
+const EXPLAIN_HTML = {
+ ja: `<p class="eh">■ 補正の強さ</p><p>ピック率が低いヒーローは、使用回数が少なく勝率が安定しない可能性があるため、勝率を50%に近づけて評価します。スライダーを上げるほど補正が強くなります。</p><p class="eh">■ 評価モード</p><p><b>補正勝率</b>：ピック率を考慮して補正した勝率。<br><b>単純勝率</b>：公式統計の勝率そのまま。<br><b>総合スコア</b>：補正勝率60%、ピック率25%、BAN率15%を組み合わせたサイト独自指標。</p><p class="eh">■ ティア（S〜D）</p><p>選択中のヒーロー群の中で、選んだ指標を相対評価してS〜Dに分類します。レーンやメイン／サブの設定によって結果が変わります。</p><p class="eh">■ レーンの絞り込み</p><p><b>メインのみ</b>は主戦場がそのレーンのヒーロー、<b>サブ含む</b>はそのレーンにも行けるヒーローを表示します。勝率統計自体はレーン別ではありません。</p><p class="eh">■ ピック率とBAN率</p><p>補正勝率ではピック率を勝率の信頼度の目安として使います。総合スコアではピック率とBAN率も加味します。重み付けは当サイト独自の設定です。</p>`,
+ id: `<p class="eh">■ Kekuatan koreksi</p><p>Win rate hero dengan pick rate rendah ditarik mendekati 50% karena jumlah pemakaiannya sedikit sehingga hasilnya bisa kurang stabil. Semakin tinggi slider, semakin kuat koreksinya.</p><p class="eh">■ Mode penilaian</p><p><b>Win Rate Terkoreksi</b>: win rate yang disesuaikan dengan pick rate.<br><b>Win Rate Murni</b>: statistik win rate resmi tanpa koreksi.<br><b>Skor Gabungan</b>: metrik situs ini yang menggabungkan win rate terkoreksi (60%), pick rate (25%), dan ban rate (15%).</p><p class="eh">■ Tier (S–D)</p><p>Hero dikelompokkan dari S sampai D berdasarkan perbandingan metrik di antara hero yang sedang ditampilkan. Hasil dapat berubah saat lane atau filter lane utama/sekunder diganti.</p><p class="eh">■ Filter lane</p><p><b>Lane utama saja</b> menampilkan hero yang lane utamanya sesuai pilihan. <b>Termasuk lane sekunder</b> juga menampilkan hero yang bisa bermain di lane tersebut. Statistik win rate tidak dipisahkan berdasarkan lane.</p><p class="eh">■ Pick rate dan ban rate</p><p>Pick rate dipakai sebagai perkiraan kestabilan win rate. Skor gabungan juga memperhitungkan pick rate dan ban rate. Bobot metrik merupakan pengaturan khusus situs ini.</p>`,
+ en: `<p class="eh">■ Adjustment strength</p><p>Win rates for heroes with low pick rates are pulled toward 50% because fewer matches can make the result less stable. Raising the slider increases the adjustment.</p><p class="eh">■ Rating modes</p><p><b>Adjusted Win Rate</b>: win rate adjusted using pick rate.<br><b>Raw Win Rate</b>: official win-rate statistics without adjustment.<br><b>Overall Score</b>: this site's metric combining adjusted win rate (60%), pick rate (25%), and ban rate (15%).</p><p class="eh">■ Tiers (S–D)</p><p>Heroes are grouped from S to D by comparing the selected metric among currently displayed heroes. Results may change when you change the lane or main/secondary lane filter.</p><p class="eh">■ Lane filters</p><p><b>Main lane only</b> shows heroes whose primary lane matches the selection. <b>Include secondary lanes</b> also shows heroes who can play there. Win-rate statistics are not separated by lane.</p><p class="eh">■ Pick rate and ban rate</p><p>Pick rate is used as an indicator of how reliable a win rate may be. Overall Score also considers pick and ban rates. The weighting is specific to this site.</p>`
+};
+
+const exactTranslations = {
+  'MLBB ティア＆カウンター表':'title','※ティアは公式ページの勝率より':'sourceNote',
+  'カウンター検索':'counterTab','ティア表':'tierTab','表示':'view','一覧表':'list',
+  '評価モード':'mode','補正勝率':'adj','単純勝率':'win','総合スコア':'score',
+  '補正の強さ（まぐれの割引き）':'strength','弱':'weak','強':'strong',
+  'ピック率が低いヒーローの勝率を50%へ引き戻す度合い':'hint',
+  'メインのみ':'mainOnly','サブ含む':'includeSub',
+  '指標の見かた（補正勝率・総合スコア・ティア）':'explain',
+  '相手ヒーローを検索（かな・カナ・英語）':'search','クリア':'clear',
+  '相手ヒーローを選ぶと、有利に立てるカウンターヒーロー・対策ビルド・対策スペルが表示されます。':'counterHelp',
+  '該当するヒーローがいません':'noHeroes','このレーンに該当するヒーローがありません':'noLane',
+  'ヒーロー':'hero','勝率':'winRate','ピック率':'pickRate','BAN率':'banRate','サブ':'sub',
+  '全レーン':'allLane','レーンを選ぶと「メインのみ／サブ含む」を切り替えられます':'laneChoose',
+  'データなし':'noData','▼ 有利に立てるカウンターヒーロー':'counterHeroes',
+  '▼ 対策スペル':'spell','▼ 対策ビルド':'build','▼ 相手のコアビルド（警戒）':'core',
+  'Creator / Dev: Edward':'creator'
+};
+function translatedText(original){
+  const trimmed = original.trim();
+  const key = exactTranslations[trimmed];
+  if(key) {
+    const val = tr(key);
+    return original.replace(trimmed, val);
+  }
+  if(trimmed.startsWith('最終更新：')) return original.replace(trimmed, tr('last') + trimmed.slice('最終更新：'.length));
+  if(trimmed.includes('（更新が停止している可能性）')) return original.replace('（更新が停止している可能性）', tr('stale'));
+  if(trimmed.includes(' が対面で有利な相手（勝率上昇分）')) return original.replace(' が対面で有利な相手（勝率上昇分）', tr('counterTitle'));
+  if(trimmed === ' 対策') return original.replace(trimmed, tr('counterSuffix'));
+  if(trimmed === '主レーンのみ') return original.replace(trimmed, tr('primaryLane'));
+  if(trimmed === 'サブレーンを含む') return original.replace(trimmed, tr('subLane'));
+  if(trimmed.startsWith('データ出典：Mobile Legends: Bang Bang')) return original.replace(trimmed, tr('source'));
+  if(trimmed.startsWith('データはtinkさん視点ベース')) return original.replace(trimmed, tr('attribution'));
+  return original;
+}
+function applyLanguage(){
+  document.documentElement.lang = currentLang === 'ja' ? 'ja' : currentLang === 'id' ? 'id' : 'en';
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>el.placeholder=tr(el.dataset.i18nPlaceholder));
+  document.querySelectorAll('body *').forEach(el=>{
+    if(el.children.length===0 && el.childNodes.length){
+      const node=el.firstChild;
+      if(node.nodeType===Node.TEXT_NODE){
+        if(!node.__originalText) node.__originalText=node.nodeValue;
+        node.nodeValue=translatedText(node.__originalText);
+      }
+    }
+  });
+  const title=document.querySelector('header .title'); if(title) title.textContent=tr('title');
+  const updated=document.getElementById('updated');
+  if(updated && RAW.updated){
+    updated.textContent=tr('last')+(RAW.updated||'—');
+    const d=new Date(RAW.updated.replace(' ','T')+':00+09:00');
+    if((Date.now()-d.getTime())/86400000>3) updated.textContent+=tr('stale');
+  }
+  const explainBody=document.querySelector('.explain-body'); if(explainBody) explainBody.innerHTML=EXPLAIN_HTML[currentLang];
+  render();
+  if(cGridBuilt) buildGrid(cInput.value);
+  if(cSelected!==null) selectCounter(cSelected);
+}
+const langSelect=document.createElement('select');
+langSelect.id='languageSelect';
+langSelect.setAttribute('aria-label','Language');
+langSelect.style.cssText='margin-top:10px;background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:7px;padding:6px 10px;font:inherit';
+langSelect.innerHTML='<option value="ja">日本語 (JP)</option><option value="id">Bahasa Indonesia (ID)</option><option value="en">English (EN)</option>';
+document.querySelector('header').appendChild(langSelect);
+try { currentLang=localStorage.getItem('mlbb-tier-lang') || 'ja'; } catch(e) {}
+if(!LANG[currentLang]) currentLang='ja';
+langSelect.value=currentLang;
+langSelect.onchange=()=>{ currentLang=langSelect.value; try{localStorage.setItem('mlbb-tier-lang',currentLang)}catch(e){} applyLanguage(); };
+
+applyLanguage();
+render();
+// 初期表示はカウンター検索タブ
+document.getElementById('tierFooter').classList.add('hidden');
+buildGrid();
+
+</script>
+</body>
+</html>

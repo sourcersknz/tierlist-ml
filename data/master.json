@@ -1,0 +1,1150 @@
+{
+ "132": {
+  "name": "マルセル",
+  "en": "Marcel",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ },
+ "88": {
+  "name": "マーシャ",
+  "en": "Masha",
+  "lanes": [
+   "roam",
+   "exp",
+   "jg"
+  ],
+  "main": "exp"
+ },
+ "14": {
+  "name": "ラファエル",
+  "en": "Rafaela",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ },
+ "23": {
+  "name": "グールド",
+  "en": "Gord",
+  "lanes": [
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "114": {
+  "name": "メリッサ",
+  "en": "Melissa",
+  "lanes": [
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "78": {
+  "name": "クッフラー",
+  "en": "Khufra",
+  "lanes": [
+   "roam",
+   "exp"
+  ],
+  "main": "roam"
+ },
+ "48": {
+  "name": "ディガー",
+  "en": "Diggie",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ },
+ "133": {
+  "name": "ヒララ",
+  "en": "Hirara",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "127": {
+  "name": "ルーカス",
+  "en": "Lukas",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "1": {
+  "name": "マイヤ",
+  "en": "Miya",
+  "lanes": [
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "19": {
+  "name": "ミノタウル",
+  "en": "Minotaur",
+  "lanes": [
+   "roam",
+   "exp"
+  ],
+  "main": "roam"
+ },
+ "62": {
+  "name": "カジャ",
+  "en": "Kaja",
+  "lanes": [
+   "roam",
+   "exp"
+  ],
+  "main": "roam"
+ },
+ "112": {
+  "name": "フローラ",
+  "en": "Floryn",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ },
+ "20": {
+  "name": "ロイン",
+  "en": "Lolita",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ },
+ "93": {
+  "name": "アテラス",
+  "en": "Atlas",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ },
+ "124": {
+  "name": "チップ",
+  "en": "Chip",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ },
+ "3": {
+  "name": "セイバー",
+  "en": "Saber",
+  "lanes": [
+   "roam",
+   "jg"
+  ],
+  "main": "roam"
+ },
+ "46": {
+  "name": "オデット",
+  "en": "Odette",
+  "lanes": [
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "117": {
+  "name": "フレドリン",
+  "en": "Fredrinn",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "43": {
+  "name": "エレシル",
+  "en": "Irithel",
+  "lanes": [
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "15": {
+  "name": "エウドラ",
+  "en": "Eudora",
+  "lanes": [
+   "roam",
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "22": {
+  "name": "フレイヤ",
+  "en": "Freya",
+  "lanes": [
+   "exp",
+   "jg",
+   "gold"
+  ],
+  "main": "exp"
+ },
+ "97": {
+  "name": "ベラ",
+  "en": "Benedetta",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "exp"
+ },
+ "104": {
+  "name": "グルー",
+  "en": "Gloo",
+  "lanes": [
+   "roam",
+   "exp"
+  ],
+  "main": "roam"
+ },
+ "57": {
+  "name": "ヴァリル",
+  "en": "Valir",
+  "lanes": [
+   "roam",
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "94": {
+  "name": "ボボル＆クバ",
+  "en": "Popol and Kupa",
+  "lanes": [
+   "jg",
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "101": {
+  "name": "イヴ",
+  "en": "Yve",
+  "lanes": [
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "75": {
+  "name": "カティタ",
+  "en": "Kadita",
+  "lanes": [
+   "roam",
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "76": {
+  "name": "ファラミス",
+  "en": "Faramis",
+  "lanes": [
+   "roam",
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "45": {
+  "name": "アルゴス",
+  "en": "Argus",
+  "lanes": [
+   "exp"
+  ],
+  "main": "exp"
+ },
+ "30": {
+  "name": "イスンシン",
+  "en": "Yi Sun-shin",
+  "lanes": [
+   "jg",
+   "gold"
+  ],
+  "main": "jg"
+ },
+ "85": {
+  "name": "ディアス",
+  "en": "Dyrroth",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "exp"
+ },
+ "109": {
+  "name": "アモン",
+  "en": "Aamon",
+  "lanes": [
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "60": {
+  "name": "ハナビ",
+  "en": "Hanabi",
+  "lanes": [
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "34": {
+  "name": "エスタス",
+  "en": "Estes",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ },
+ "84": {
+  "name": "リン",
+  "en": "Ling",
+  "lanes": [
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "74": {
+  "name": "マイシータール",
+  "en": "Minsitthar",
+  "lanes": [
+   "roam",
+   "exp"
+  ],
+  "main": "exp"
+ },
+ "103": {
+  "name": "パキート",
+  "en": "Paquito",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "exp"
+ },
+ "31": {
+  "name": "モスコブ",
+  "en": "Moskov",
+  "lanes": [
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "24": {
+  "name": "ナタリア",
+  "en": "Natalia",
+  "lanes": [
+   "roam",
+   "jg"
+  ],
+  "main": "roam"
+ },
+ "11": {
+  "name": "ベイン",
+  "en": "Bane",
+  "lanes": [
+   "exp",
+   "jg",
+   "mid",
+   "gold"
+  ],
+  "main": "jg"
+ },
+ "105": {
+  "name": "ビアトリクス",
+  "en": "Beatrix",
+  "lanes": [
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "108": {
+  "name": "アウルス",
+  "en": "Aulus",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "80": {
+  "name": "グィネヴィア",
+  "en": "Guinevere",
+  "lanes": [
+   "roam",
+   "exp",
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "99": {
+  "name": "バラッツ",
+  "en": "Barats",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "70": {
+  "name": "ベレリック",
+  "en": "Belerick",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ },
+ "67": {
+  "name": "レオモード",
+  "en": "Leomord",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "25": {
+  "name": "カグラ",
+  "en": "Kagura",
+  "lanes": [
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "77": {
+  "name": "バターン",
+  "en": "Badang",
+  "lanes": [
+   "roam",
+   "exp"
+  ],
+  "main": "roam"
+ },
+ "4": {
+  "name": "アリス",
+  "en": "Alice",
+  "lanes": [
+   "exp",
+   "jg",
+   "mid"
+  ],
+  "main": "jg"
+ },
+ "50": {
+  "name": "ザスク",
+  "en": "Zhask",
+  "lanes": [
+   "mid",
+   "gold"
+  ],
+  "main": "mid"
+ },
+ "90": {
+  "name": "シルバンナ",
+  "en": "Silvanna",
+  "lanes": [
+   "roam",
+   "exp",
+   "jg"
+  ],
+  "main": "exp"
+ },
+ "129": {
+  "name": "則天",
+  "en": "Zetian",
+  "lanes": [
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "121": {
+  "name": "イクシア",
+  "en": "Ixia",
+  "lanes": [
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "120": {
+  "name": "アーロット",
+  "en": "Arlott",
+  "lanes": [
+   "roam",
+   "exp"
+  ],
+  "main": "exp"
+ },
+ "131": {
+  "name": "ソラ",
+  "en": "Sora",
+  "lanes": [
+   "roam",
+   "exp"
+  ],
+  "main": "exp"
+ },
+ "59": {
+  "name": "ウラノス",
+  "en": "Uranus",
+  "lanes": [
+   "roam",
+   "exp"
+  ],
+  "main": "exp"
+ },
+ "107": {
+  "name": "ニュート",
+  "en": "Natan",
+  "lanes": [
+   "jg",
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "12": {
+  "name": "ブルーノ",
+  "en": "Bruno",
+  "lanes": [
+   "jg",
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "130": {
+  "name": "アイーダ",
+  "en": "Obsidia",
+  "lanes": [
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "82": {
+  "name": "ディスラー",
+  "en": "Terizla",
+  "lanes": [
+   "exp"
+  ],
+  "main": "exp"
+ },
+ "33": {
+  "name": "サイクロプス",
+  "en": "Cyclops",
+  "lanes": [
+   "jg",
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "7": {
+  "name": "アルカード",
+  "en": "Alucard",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "113": {
+  "name": "イン",
+  "en": "Yin",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "98": {
+  "name": "カレード",
+  "en": "Khaleed",
+  "lanes": [
+   "roam",
+   "exp"
+  ],
+  "main": "roam"
+ },
+ "100": {
+  "name": "ブロディ",
+  "en": "Brody",
+  "lanes": [
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "72": {
+  "name": "デームス",
+  "en": "Thamuz",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "exp"
+ },
+ "95": {
+  "name": "ゾン",
+  "en": "Yu Zhong",
+  "lanes": [
+   "exp"
+  ],
+  "main": "exp"
+ },
+ "27": {
+  "name": "悟空",
+  "en": "Sun",
+  "lanes": [
+   "roam",
+   "exp",
+   "jg"
+  ],
+  "main": "roam"
+ },
+ "106": {
+  "name": "フォヴィウス",
+  "en": "Phoveus",
+  "lanes": [
+   "roam",
+   "exp"
+  ],
+  "main": "exp"
+ },
+ "91": {
+  "name": "セシリオン",
+  "en": "Cecilion",
+  "lanes": [
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "13": {
+  "name": "クリント",
+  "en": "Clint",
+  "lanes": [
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "56": {
+  "name": "ゴセン",
+  "en": "Gusion",
+  "lanes": [
+   "jg",
+   "mid"
+  ],
+  "main": "jg"
+ },
+ "73": {
+  "name": "ハリス",
+  "en": "Harith",
+  "lanes": [
+   "jg",
+   "mid",
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "81": {
+  "name": "エスメラルダ",
+  "en": "Esmeralda",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "exp"
+ },
+ "29": {
+  "name": "ルビー",
+  "en": "Ruby",
+  "lanes": [
+   "exp"
+  ],
+  "main": "exp"
+ },
+ "92": {
+  "name": "カーミラ",
+  "en": "Carmilla",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ },
+ "69": {
+  "name": "半蔵",
+  "en": "Hanzo",
+  "lanes": [
+   "roam",
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "35": {
+  "name": "ヒルダ",
+  "en": "Hilda",
+  "lanes": [
+   "roam",
+   "exp"
+  ],
+  "main": "roam"
+ },
+ "122": {
+  "name": "ノーラン",
+  "en": "Nolan",
+  "lanes": [
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "111": {
+  "name": "イーディス",
+  "en": "Edith",
+  "lanes": [
+   "roam",
+   "exp",
+   "gold"
+  ],
+  "main": "exp"
+ },
+ "40": {
+  "name": "キャリー",
+  "en": "Karrie",
+  "lanes": [
+   "jg",
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "9": {
+  "name": "ガイ",
+  "en": "Akai",
+  "lanes": [
+   "roam",
+   "jg"
+  ],
+  "main": "roam"
+ },
+ "38": {
+  "name": "サナ",
+  "en": "Vexana",
+  "lanes": [
+   "roam",
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "65": {
+  "name": "クラウド",
+  "en": "Claude",
+  "lanes": [
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "64": {
+  "name": "アルダス",
+  "en": "Aldous",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "exp"
+ },
+ "118": {
+  "name": "ジョイ",
+  "en": "Joy",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "116": {
+  "name": "ジュリアン",
+  "en": "Julian",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "66": {
+  "name": "ヴェル",
+  "en": "Vale",
+  "lanes": [
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "51": {
+  "name": "ハカート",
+  "en": "Helcurt",
+  "lanes": [
+   "roam",
+   "jg"
+  ],
+  "main": "roam"
+ },
+ "54": {
+  "name": "メタルヘッド",
+  "en": "Jawhead",
+  "lanes": [
+   "roam",
+   "exp",
+   "jg"
+  ],
+  "main": "exp"
+ },
+ "53": {
+  "name": "ラズリー",
+  "en": "Lesley",
+  "lanes": [
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "126": {
+  "name": "粛遊",
+  "en": "Suyou",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "68": {
+  "name": "星夢",
+  "en": "Lunox",
+  "lanes": [
+   "mid",
+   "gold"
+  ],
+  "main": "mid"
+ },
+ "21": {
+  "name": "隼",
+  "en": "Hayabusa",
+  "lanes": [
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "37": {
+  "name": "ラプラプ",
+  "en": "Lapu-Lapu",
+  "lanes": [
+   "exp"
+  ],
+  "main": "exp"
+ },
+ "87": {
+  "name": "玄覇",
+  "en": "Baxia",
+  "lanes": [
+   "roam",
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "115": {
+  "name": "ザビエル",
+  "en": "Xavier",
+  "lanes": [
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "36": {
+  "name": "オーロラ",
+  "en": "Aurora",
+  "lanes": [
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "125": {
+  "name": "燭心",
+  "en": "Zhuxin",
+  "lanes": [
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "83": {
+  "name": "エックス",
+  "en": "X.Borg",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "exp"
+ },
+ "71": {
+  "name": "ジミー",
+  "en": "Kimmy",
+  "lanes": [
+   "mid",
+   "gold"
+  ],
+  "main": "mid"
+ },
+ "58": {
+  "name": "マーティス",
+  "en": "Martis",
+  "lanes": [
+   "exp"
+  ],
+  "main": "exp"
+ },
+ "55": {
+  "name": "アンジェラ",
+  "en": "Angela",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ },
+ "42": {
+  "name": "ハーリー",
+  "en": "Harley",
+  "lanes": [
+   "jg",
+   "mid"
+  ],
+  "main": "jg"
+ },
+ "63": {
+  "name": "セリナ",
+  "en": "Selena",
+  "lanes": [
+   "roam",
+   "jg",
+   "mid"
+  ],
+  "main": "roam"
+ },
+ "32": {
+  "name": "ジェイソン",
+  "en": "Johnson",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ },
+ "89": {
+  "name": "琥珀",
+  "en": "Wanwan",
+  "lanes": [
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "44": {
+  "name": "ガレック",
+  "en": "Grock",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ },
+ "52": {
+  "name": "ファーサ",
+  "en": "Pharsa",
+  "lanes": [
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "86": {
+  "name": "リリア",
+  "en": "Lylia",
+  "lanes": [
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "123": {
+  "name": "シーシー",
+  "en": "Cici",
+  "lanes": [
+   "exp"
+  ],
+  "main": "exp"
+ },
+ "18": {
+  "name": "ライラ",
+  "en": "Layla",
+  "lanes": [
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "2": {
+  "name": "バルモンド",
+  "en": "Balmond",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "26": {
+  "name": "シュウ",
+  "en": "Chou",
+  "lanes": [
+   "roam",
+   "exp"
+  ],
+  "main": "exp"
+ },
+ "79": {
+  "name": "グレンジャー",
+  "en": "Granger",
+  "lanes": [
+   "jg",
+   "gold"
+  ],
+  "main": "gold"
+ },
+ "102": {
+  "name": "マチルダ",
+  "en": "Mathilda",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ },
+ "96": {
+  "name": "ローイー",
+  "en": "Luo Yi",
+  "lanes": [
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "119": {
+  "name": "ノヴァリア",
+  "en": "Novaria",
+  "lanes": [
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "49": {
+  "name": "ヒロス",
+  "en": "Hylos",
+  "lanes": [
+   "roam",
+   "jg"
+  ],
+  "main": "roam"
+ },
+ "39": {
+  "name": "ロジャー",
+  "en": "Roger",
+  "lanes": [
+   "jg",
+   "gold"
+  ],
+  "main": "jg"
+ },
+ "61": {
+  "name": "嫦娥",
+  "en": "Chang'e",
+  "lanes": [
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "8": {
+  "name": "カリナ",
+  "en": "Karina",
+  "lanes": [
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "110": {
+  "name": "ヴァレンティナ",
+  "en": "Valentina",
+  "lanes": [
+   "exp",
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "41": {
+  "name": "ガトートカチャ",
+  "en": "Gatotkaca",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ },
+ "5": {
+  "name": "ナナ",
+  "en": "Nana",
+  "lanes": [
+   "mid"
+  ],
+  "main": "mid"
+ },
+ "6": {
+  "name": "ティグラル",
+  "en": "Tigreal",
+  "lanes": [
+   "roam",
+   "exp"
+  ],
+  "main": "roam"
+ },
+ "16": {
+  "name": "子龍",
+  "en": "Zilong",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "exp"
+ },
+ "28": {
+  "name": "アルファ",
+  "en": "Alpha",
+  "lanes": [
+   "exp",
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "17": {
+  "name": "ファニー",
+  "en": "Fanny",
+  "lanes": [
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "128": {
+  "name": "カレア",
+  "en": "Kalea",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ },
+ "47": {
+  "name": "ランスロット",
+  "en": "Lancelot",
+  "lanes": [
+   "jg"
+  ],
+  "main": "jg"
+ },
+ "10": {
+  "name": "フランコ",
+  "en": "Franco",
+  "lanes": [
+   "roam"
+  ],
+  "main": "roam"
+ }
+}
